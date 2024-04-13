@@ -11,7 +11,6 @@ require('dotenv/config');
 let bookPicRear, bookPicFront;
 const fs = require('fs');
 const parser = require('body-parser');
-const url = require('url');
 const cors = require('cors');
 const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
