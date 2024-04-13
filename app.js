@@ -5,17 +5,20 @@
 
 // Module declaractions
 const express = require('express');
-const app = express();
+const LoadENV = require('@book-junction/env-loader');
+const fileUpload = require('express-fileupload');
 const path = require('path');
-require('dotenv/config');
-let bookPicRear, bookPicFront;
 const fs = require('fs');
 const parser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
-const fileUpload = require('express-fileupload');
 const mongoClient = require('mongodb').MongoClient;
+
 const Utilities = require('./utils/');
+
+const app = express();
+let bookPicRear, bookPicFront;
+const $ENV = LoadENV(['.env.development']);
 
 app.use('/static', express.static('static'));
 app.use('/uploads', express.static('uploads'));
@@ -113,7 +116,7 @@ app.post('/', async (req, res) => {
 
     if (isValid && req.body.phone.length >= 10 && req.body.phone.length <= 13) {
       // Connecting with the MongoDB database...
-      ref = await Utilities.$DB.connect(process.env.DATABASE_URI);
+      ref = await Utilities.$DB.connect($ENV.DATABASE_URI);
       const payload = {
         ...req.body,
         bookPic: { front: bookPicFront.name, rear: bookPicRear.name },
@@ -137,12 +140,12 @@ app.post('/', async (req, res) => {
 
 app.post('/delete', (req, res) => {
   if (isValidInpData(req.body.booktoDelete)) {
-    mongoClient.connect(process.env.DATABASE_URI, (err, db) => {
+    mongoClient.connect($ENV.DATABASE_URI, (err, db) => {
       if (err) {
         console.log(err);
         res.send('error');
       } else {
-        const database = db.db(process.env.DATABASE_NAME);
+        const database = db.db($ENV.DATABASE_NAME);
         const books = database.collection('books');
         let counter = 0;
 
@@ -202,7 +205,7 @@ app.post('/updates', async (req, res) => {
     ref = null,
     books = {};
   try {
-    ref = await Utilities.$DB.connect(process.env.DATABASE_URI);
+    ref = await Utilities.$DB.connect($ENV.DATABASE_URI);
     const ans = await Utilities.$DB.find(ref, { addedBy: username });
     if (Object.entries(ans).length > 0) {
       for (let i = 0; i < Object.entries(ans).length; i++) {
@@ -243,12 +246,12 @@ app.get('/view', (req, res) => {
 });
 
 app.post('/check', (req, res) => {
-  mongoClient.connect(process.env.DATABASE_URI, (err, db) => {
+  mongoClient.connect($ENV.DATABASE_URI, (err, db) => {
     if (err) {
       console.log(err);
       res.send('error');
     } else {
-      const database = db.db(process.env.DATABASE_NAME);
+      const database = db.db($ENV.DATABASE_NAME);
       const collection = database.collection('users');
 
       collection
@@ -278,68 +281,64 @@ app.post('/check', (req, res) => {
 });
 
 app.post('/logout', async (req, res) => {
-  const { username } = req.body;
-  const dbUrl = `${process.env.DATABASE_URI}${process.env.DATABASE_NAME}`;
-  const ref = await Utilities.$DB.connect(dbUrl);
-  const updatedDoc = await Utilities.$DB.findAndUpdate(ref, 'users', { username }, { $set: { isLoggedIn: false } });
+  // const { username } = req.body;
+  // const dbUrl = `${$ENV.DATABASE_URI}${$ENV.DATABASE_NAME}`;
+  // const ref = await Utilities.$DB.connect(dbUrl);
+  // const updatedDoc = await Utilities.$DB.findAndUpdate(ref, 'users', { username }, { $set: { isLoggedIn: false } });
 
-  if (updatedDoc && !updatedDoc.isLoggedIn) {
-    return res.status(200).json({
-      message: 'Logout successfull',
-      status: true,
-      code: 200,
-    });
-  } else {
-    return res.status(503).json({
-      message: "We're unable to log you out, please try again",
-      status: false,
-      code: 503,
-    });
-  }
+  // if (updatedDoc && !updatedDoc.isLoggedIn) {
+  //   return res.status(200).json({
+  //     message: 'Logout successfull',
+  //     status: true,
+  //     code: 200,
+  //   });
+  // } else {
+  //   return res.status(503).json({
+  //     message: "We're unable to log you out, please try again",
+  //     status: false,
+  //     code: 503,
+  //   });
+  // }
 
-  // mongoClient.connect(process.env.DATABASE_URI, (err, db) => {
-  //   if (err) {
-  //     console.log(err);
-  //     res.send("error");
-  //   } else {
-  //     const database = db.db(process.env.DATABASE_NAME);
-  //     const collection = database.collection("users");
+  mongoClient.connect($ENV.DATABASE_URI, (err, db) => {
+    if (err) {
+      console.log(err);
+      res.send('error');
+    } else {
+      const database = db.db($ENV.DATABASE_NAME);
+      const collection = database.collection('users');
 
-  //     collection
-  //       .find({ username: req.body.username })
-  //       .toArray()
-  //       .then((ans) => {
-  //         if (Object.entries(ans).length > 0) {
-  //           collection.updateOne(
-  //             { username: ans[0].username },
-  //             { $set: { isLoggedIn: false } },
-  //             (err, result) => {
-  //               if (err) {
-  //                 res.send("error");
-  //               } else {
-  //                 console.log(ans);
-  //                 res.send("logout");
-  //               }
+      collection
+        .find({ username: req.body.username })
+        .toArray()
+        .then((ans) => {
+          if (Object.entries(ans).length > 0) {
+            collection.updateOne({ username: ans[0].username }, { $set: { isLoggedIn: false } }, (err, result) => {
+              if (err) {
+                res.send('error');
+              } else {
+                console.log(ans);
+                res.send('logout');
+              }
 
-  //               db.close();
-  //             }
-  //           );
-  //         } else {
-  //           db.close();
-  //           res.send("Invalid credentials");
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         res.send("error");
-  //       });
-  //   }
-  // });
+              db.close();
+            });
+          } else {
+            db.close();
+            res.send('Invalid credentials');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          res.send('error');
+        });
+    }
+  });
 });
 
 app.post('/login', async (req, res) => {
   if (isValidInpData(req.body.username)) {
-    const dbUrl = `${process.env.DATABASE_URI}${process.env.DATABASE_NAME}`;
+    const dbUrl = `${$ENV.DATABASE_URI}${$ENV.DATABASE_NAME}`;
     const ref = await Utilities.$DB.connect(dbUrl);
     const document = await Utilities.$DB.findOne(ref, 'users', {
       $and: [{ username: req.body.username }, { password: req.body.password }],
