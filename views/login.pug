@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="../static/css/alignment.css">
+
+</head>
+<body>
+    
+    <section class="align align-ver" id="login">
+
+        <div class="align align-ver container" id="root">
+
+            <div class="align align-ver">
+                <h1>CONTROL PANEL LOGIN</h1>
+            </div>
+
+            <div class="align align-ver container-lg">
+
+                <input type="text" placeholder="Username" id="username" required>
+                <input type="password" id="password" placeholder="Password" required>
+
+            </div>
+
+            <div class="align-sec">
+
+                <button type="submit" id="button1">Submit</button>
+                <button type="reset" id="button2" class="cn-btn">Reset</button>
+
+            </div>
+        </div>
+
+
+        <dialog class="align align-ver" id="dialogBox">
+
+            <span id="close">&times;</span>
+
+            <h1 class="heading"></h1>
+
+        </dialog>
+
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js" defer></script>
+    <script src="../static/js/login.js" type='module' defer></script>
+
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Bree Serif',serif;
+}
+
+.align{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.align-ver{
+    flex-direction: column;
+}
+
+.align-def{
+    display: flex;
+    align-items:flex-start;
+    justify-content:flex-start;
+}
+
+.align-sec{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}

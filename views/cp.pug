@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Panel</title>
+
+    <link rel="stylesheet" href="../static/css/alignment.css">
+    <link rel="stylesheet" href="../static/css/cp.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/dcf9f5d1bd.js"></script>
+
+</head>
+<body>
+
+    <section class="align align-ver dialogs">
+
+        <dialog class="align align-ver">
+            <h1>Add a new book</h1>
+
+            <form action="/" class="align align-ver">
+                
+                <div class="align">
+                    <input type="file" name="image" id="image" multiple accept="image/*" required>
+                </div>
+
+                <div class="align">
+                    <input type="text" id="bookName" name="bookName" placeholder="Enter book name" title="" required>
+                    <input type="text" id="authorName" name="authorName" placeholder="Enter book author name" title="" required>
+                </div>
+
+                <div class="align">
+                    <input type="text" id="pubYear" name="pubYear" placeholder="Enter book publication year" title="" required>
+                    <input type="text" id="pubName" name="pubName" placeholder="Enter book publication name" title="" required>
+                </div>
+
+                <div class="align">
+                    <input type="text" id="edition" name="edition" placeholder="Enter book edition" title="" required>
+                    <input type="text" id="price" name="price" placeholder="Enter book selling price (in ₹)" title="" required>
+                </div>
+
+                <div class="align">
+                    <select name="category" id="category" required>
+                        <option value="IT">Information Technology</option>
+                        <option value="CSE">Computer Science and Engineering</option>
+                        <option value="ECE">Electronics and Communication Engineering</option>
+                        <option value="EE">Electrical Engineering</option>
+                        <option value="ME">Mechanical Engineering</option>
+                        <option value="CE">Civil Engineering</option>
+                        <option value="PE">Production Engineering</option>
+                    </select>
+
+                    <input type="text" id="phone" name="phone" placeholder="Enter your contact number" title="" required>
+                </div>
+
+                <div class="align-sec">
+                    <button type="submit" id="button5">Add</button>
+                    <button type="reset" id="button6" class="reset">Reset</button>
+                    <button type="button" id="button7" class="close">Close</button>
+                </div>
+
+                <div class="align">
+                    <dialog id="message" class="align">
+                    </dialog>
+                </div>
+
+            </form>
+        
+        </dialog>
+
+        <dialog class="secondary align align-ver">
+
+            <h1>Delete an item</h1>
+
+            <form action="/delete" class="align align-ver" method="post">
+
+                <div class="align-sec">
+                    <label for="data">Enter your book name: </label>
+                    <input type="text" id="data" name="data" placeholder="Enter book name" required title="">
+                </div>
+
+                <div class="align-sec">
+                    <button type="submit" id="button8">Delete</button>
+                    <button type="reset" id="button9" class="reset">Reset</button>
+                    <button type="button" id="button10" class="close">Close</button>
+                </div>
+
+                <div class="align" id="deletionMsg">
+                </div>
+
+            </form>
+        
+        </dialog>
+
+        <dialog class="tertiary align align-ver">
+            <h1>Please login yourself first</h1>
+        </dialog>
+    
+    </section>
+    
+    <section class="align align-ver">
+
+        <div class="container align">
+
+            <div class="con-container align">
+
+                <div class="content align align-ver first">
+                    <img src="../static/images/add.png" alt="Add">
+                </div>
+
+                <div class="content align align-ver second">
+                    <h3 class="h-tertiary">Add new item</h3>
+                    <button class="btn" id="button1" type="button">Proceed &raquo;</button>
+                </div>
+
+            </div>
+
+            <div class="con-container align">
+
+                <div class="content align align-ver first">
+                    <img src="../static/images/trash.png" alt="Delete">
+                </div>
+
+                <div class="content align align-ver second">
+                    <h3 class="h-tertiary">Delete an item</h3>
+                    <button class="btn" id="button2" type="button">Proceed &raquo;</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="container align">
+
+            <div class="con-container align">
+
+                <div class="content align align-ver first">
+                    <img src="../static/images/update.png" alt="Update">
+                </div>
+
+                <div class="content align align-ver second">
+                    <h3 class="h-tertiary">Update an item</h3>
+                    <button class="btn" id="button3" type="button">Proceed &raquo;</button>
+                </div>
+
+            </div>
+
+            <div class="con-container align">
+
+                <div class="content align align-ver first">
+                    <img src="../static/images/select.png" alt="Show">
+                </div>
+
+                <div class="content align align-ver second">
+                    <h3 class="h-tertiary">See an item</h3>
+                    <button class="btn" id="button4" type="button">Proceed &raquo;</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="../static/js/cp.js"></script>
+
+
+</body>
+</html>
