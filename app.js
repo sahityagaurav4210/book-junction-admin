@@ -1,7 +1,7 @@
-/*
-    Author : Gaurav Sahitya
-    Subject : Online Book Selling Portal
-*/
+//#region Introduction
+// Author : Gaurav Sahitya
+// Subject : Online Book Selling Portal
+//#endregion
 
 // Module declaractions
 const express = require('express');
@@ -9,9 +9,7 @@ const LoadENV = require('@book-junction/env-loader');
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const fs = require('fs');
-const parser = require('body-parser');
 const cors = require('cors');
-const morgan = require('morgan');
 const mongoClient = require('mongodb').MongoClient;
 
 const Utilities = require('./utils/');
@@ -25,20 +23,23 @@ app.use('/uploads', express.static('uploads'));
 
 // Setting up the body pareser module
 
-app.use(parser.urlencoded({ extended: false, limit: '5kb' }));
-app.use(parser.json());
+app.use(express.json({ limit: $ENV.EXPRESS_JSON_LIMIT }));
+app.use(express.urlencoded({ extended: true, limit: $ENV.EXPRESS_URL_ENCODED_LIMIT }));
 
 // Setting up the CORS (Cross Origin Resource Sharing) module
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 
 // Enabling the file uploader module to received the uploaded file.
 app.use(
   fileUpload({
+    tempFileDir: 'temp',
     createParentPath: true,
   })
 );
-
-app.use(morgan('dev'));
 
 //Setting up the view engine as pug
 
