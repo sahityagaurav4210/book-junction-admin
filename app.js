@@ -282,59 +282,24 @@ app.post('/check', (req, res) => {
 });
 
 app.post('/logout', async (req, res) => {
-  // const { username } = req.body;
-  // const dbUrl = `${$ENV.DATABASE_URI}${$ENV.DATABASE_NAME}`;
-  // const ref = await Utilities.$DB.connect(dbUrl);
-  // const updatedDoc = await Utilities.$DB.findAndUpdate(ref, 'users', { username }, { $set: { isLoggedIn: false } });
+  const { username } = req.body;
+  const dbUrl = `${$ENV.DATABASE_URI}${$ENV.DATABASE_NAME}`;
+  const ref = await Utilities.$DB.connect(dbUrl);
+  const updatedDoc = await Utilities.$DB.findAndUpdate(ref, 'users', { username }, { $set: { isLoggedIn: false } });
 
-  // if (updatedDoc && !updatedDoc.isLoggedIn) {
-  //   return res.status(200).json({
-  //     message: 'Logout successfull',
-  //     status: true,
-  //     code: 200,
-  //   });
-  // } else {
-  //   return res.status(503).json({
-  //     message: "We're unable to log you out, please try again",
-  //     status: false,
-  //     code: 503,
-  //   });
-  // }
-
-  mongoClient.connect($ENV.DATABASE_URI, (err, db) => {
-    if (err) {
-      console.log(err);
-      res.send('error');
-    } else {
-      const database = db.db($ENV.DATABASE_NAME);
-      const collection = database.collection('users');
-
-      collection
-        .find({ username: req.body.username })
-        .toArray()
-        .then((ans) => {
-          if (Object.entries(ans).length > 0) {
-            collection.updateOne({ username: ans[0].username }, { $set: { isLoggedIn: false } }, (err, result) => {
-              if (err) {
-                res.send('error');
-              } else {
-                console.log(ans);
-                res.send('logout');
-              }
-
-              db.close();
-            });
-          } else {
-            db.close();
-            res.send('Invalid credentials');
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          res.send('error');
-        });
-    }
-  });
+  if (updatedDoc && !updatedDoc.isLoggedIn) {
+    return res.status(200).json({
+      message: 'Logout successfull',
+      status: true,
+      code: 200,
+    });
+  } else {
+    return res.status(503).json({
+      message: "We're unable to log you out, please try again",
+      status: false,
+      code: 503,
+    });
+  }
 });
 
 app.post('/login', async (req, res) => {
