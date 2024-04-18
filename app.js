@@ -6,18 +6,17 @@
 // Module declaractions
 
 const Server = require('./config');
-const express = require('express');
 const LoadENV = require('@book-junction/env-loader');
-const fileUpload = require('express-fileupload');
-const path = require('path');
 const fs = require('fs');
-const cors = require('cors');
 const mongoClient = require('mongodb').MongoClient;
 
 const Utilities = require('./utils/');
 
 let bookPicRear, bookPicFront;
+
 const $ENV = LoadENV(['.env.development']);
+const PORT = $ENV.PORT ?? 3000;
+const HOST = $ENV.HOST ?? 'localhost';
 
 Server.init();
 Server.configure();
@@ -353,6 +352,6 @@ Server.$App.post('/upload', (req, res) => {
 
 // Starting the server at port 3000
 
-Server.$App.listen(3000, () => {
-  console.log('Server started at port 3000');
+Server.$App.listen(PORT, HOST, () => {
+  console.log(`Server started at port ${PORT} 🚀🚀🚀🚀`);
 });
