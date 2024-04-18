@@ -5,6 +5,7 @@ const cors = require('cors');
 const fileUpload = require('express-fileupload');
 
 const AppNotInitializedException = require('../exceptions/AppNotInitializedException');
+const EnvNotLoadedException = require('../exceptions/EnvNotLoadedException');
 
 class ServerConfiguration {
   static $App;
@@ -49,6 +50,21 @@ class ServerConfiguration {
     //Configuring view engines
     ServerConfiguration.$App.set('view engine', 'pug');
     ServerConfiguration.$App.set('views', path.resolve(__dirname, '../views'));
+  }
+
+  static checkSystemVariables(requiredVars = [], optionalVars = []) {
+    let loaded = true;
+
+    for (let variable in ServerConfiguration.$ENV) {
+      if (requiredVars.includes(variable)) continue;
+      else if (optionalVars.includes(variable)) continue;
+      else {
+        loaded = false;
+        break;
+      }
+    }
+
+    if (!loaded) throw new EnvNotLoadedException('Missing required environment variables.');
   }
 }
 
