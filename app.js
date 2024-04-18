@@ -4,59 +4,24 @@
 //#endregion
 
 // Module declaractions
-const express = require('express');
+
+const Server = require('./config');
 const LoadENV = require('@book-junction/env-loader');
-const fileUpload = require('express-fileupload');
-const path = require('path');
 const fs = require('fs');
-const cors = require('cors');
 const mongoClient = require('mongodb').MongoClient;
 
 const Utilities = require('./utils/');
 
-const app = express();
 let bookPicRear, bookPicFront;
+
 const $ENV = LoadENV(['.env.development']);
+const PORT = $ENV.PORT ?? 3000;
+const HOST = $ENV.HOST ?? 'localhost';
 
-app.use('/static', express.static('static'));
-app.use('/uploads', express.static('uploads'));
-
-// Setting up the body pareser module
-
-app.use(express.json({ limit: $ENV.EXPRESS_JSON_LIMIT }));
-app.use(express.urlencoded({ extended: true, limit: $ENV.EXPRESS_URL_ENCODED_LIMIT }));
-
-// Setting up the CORS (Cross Origin Resource Sharing) module
-app.use(
-  cors({
-    origin: '*',
-  })
-);
-
-// Enabling the file uploader module to received the uploaded file.
-app.use(
-  fileUpload({
-    tempFileDir: 'temp',
-    createParentPath: true,
-  })
-);
-
-//Setting up the view engine as pug
-
-app.set('view engine', 'pug');
-
-//Setting up the view directory
-
-app.set('views', path.join(__dirname + '/views'));
+Server.init();
+Server.configure();
 
 //Setting up the endpoint
-
-app.get('/', (req, res) => {
-  let queryString = req.query;
-
-  if (queryString.request != 'cp') res.render('login');
-  else res.render('cp');
-});
 
 function isValidInpData(data) {
   let isValidData = false;
@@ -85,9 +50,16 @@ function isValidInpData(data) {
   return isValidData;
 }
 
+Server.$App.get('/', (req, res) => {
+  let queryString = req.query;
+
+  if (queryString.request != 'cp') res.render('login');
+  else res.render('cp');
+});
+
 // Endpoint for adding the book details
 
-app.post('/', async (req, res) => {
+Server.$App.post('/', async (req, res) => {
   let ref;
   try {
     // Putting the received form's data into an array called 'data'.
@@ -139,7 +111,7 @@ app.post('/', async (req, res) => {
   }
 });
 
-app.post('/delete', (req, res) => {
+Server.$App.post('/delete', (req, res) => {
   if (isValidInpData(req.body.booktoDelete)) {
     mongoClient.connect($ENV.DATABASE_URI, (err, db) => {
       if (err) {
@@ -192,7 +164,7 @@ app.post('/delete', (req, res) => {
   }
 });
 
-app.get('/updates', (req, res) => {
+Server.$App.get('/updates', (req, res) => {
   let queryString = req.body.username;
 
   if (queryString == null || queryString == undefined) {
@@ -200,7 +172,7 @@ app.get('/updates', (req, res) => {
   }
 });
 
-app.post('/updates', async (req, res) => {
+Server.$App.post('/updates', async (req, res) => {
   let username = req.body.username;
   let bookObj = [],
     ref = null,
@@ -242,11 +214,11 @@ app.post('/updates', async (req, res) => {
   }
 });
 
-app.get('/view', (req, res) => {
+Server.$App.get('/view', (req, res) => {
   res.render('view');
 });
 
-app.post('/check', (req, res) => {
+Server.$App.post('/check', (req, res) => {
   mongoClient.connect($ENV.DATABASE_URI, (err, db) => {
     if (err) {
       console.log(err);
@@ -281,7 +253,7 @@ app.post('/check', (req, res) => {
   });
 });
 
-app.post('/logout', async (req, res) => {
+Server.$App.post('/logout', async (req, res) => {
   const { username } = req.body;
   const dbUrl = `${$ENV.DATABASE_URI}${$ENV.DATABASE_NAME}`;
   const ref = await Utilities.$DB.connect(dbUrl);
@@ -302,7 +274,7 @@ app.post('/logout', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
+Server.$App.post('/login', async (req, res) => {
   if (isValidInpData(req.body.username)) {
     const dbUrl = `${$ENV.DATABASE_URI}${$ENV.DATABASE_NAME}`;
     const ref = await Utilities.$DB.connect(dbUrl);
@@ -347,26 +319,27 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/uploads', (req, res) => {
+Server.$App.get('/uploads', (req, res) => {
   res.render(req.url);
 });
 
 // Endpoint for handling the uploaded images
 
-app.post('/upload', (req, res) => {
+Server.$App.post('/upload', (req, res) => {
   // Checking whether the file has arrived or not...
 
   if (req.files) {
     bookPicRear = req.files.bookPicRear;
     bookPicFront = req.files.bookPicFront;
 
-    if (!fs.existsSync('./static/uploads/' + bookPicFront.name)) {
-      fs.mkdirSync('./static/uploads/' + bookPicFront.name);
+    console.log(bookPicFront);
+    if (!fs.existsSync('uploads/' + bookPicFront.name)) {
+      // fs.mkdirSync('uploads/' + bookPicFront.name);
 
       // Moving the received images into server's directory...
 
-      bookPicFront.mv('./static/uploads/' + bookPicFront.name + '/' + bookPicFront.name);
-      bookPicRear.mv('./static/uploads/' + bookPicFront.name + '/' + bookPicRear.name);
+      bookPicFront.mv('/uploads/' + bookPicFront.name);
+      bookPicRear.mv('/uploads/' + bookPicFront.name);
       res.send('ok');
     } else {
       res.send('file exists');
@@ -379,6 +352,6 @@ app.post('/upload', (req, res) => {
 
 // Starting the server at port 3000
 
-app.listen(3000, () => {
-  console.log('Server started at port 3000');
+Server.$App.listen(PORT, HOST, () => {
+  console.log(`Server started at port ${PORT} 🚀🚀🚀🚀`);
 });
