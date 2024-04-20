@@ -2,13 +2,14 @@ const Utilities = require('../utils');
 
 class AuthController {
   static async login(req, res) {
-    const document = await Utilities.$DB.findOne(global.$DB, 'users', {
+    const { $DB } = global;
+    const document = await Utilities.$DB.findOne($DB, 'users', {
       $and: [{ username: req.body.username }, { password: req.body.password }],
     });
 
     if (document) {
       const { matchedCount } = await Utilities.$DB.update(
-        global.$DB,
+        $DB,
         'users',
         { _id: document._id },
         { $set: { isLoggedIn: true } }
