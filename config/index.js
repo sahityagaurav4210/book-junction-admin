@@ -1,20 +1,24 @@
 const express = require('express');
 const LoadENV = require('@book-junction/env-loader');
+const fileUpload = require('express-fileupload');
+
 const path = require('path');
 const cors = require('cors');
-const fileUpload = require('express-fileupload');
 
 const AppNotInitializedException = require('../exceptions/AppNotInitializedException');
 const EnvNotLoadedException = require('../exceptions/EnvNotLoadedException');
+const Utilities = require('../utils');
 
 class ServerConfiguration {
   static $App;
   static $ENV;
+  static $DB;
 
   static init() {
     const app = express();
     ServerConfiguration.$App = app;
     ServerConfiguration.$ENV = LoadENV(['.env.development']);
+    global.$ENV = ServerConfiguration.$ENV;
   }
 
   static configure() {
@@ -65,6 +69,11 @@ class ServerConfiguration {
     }
 
     if (!loaded) throw new EnvNotLoadedException('Missing required environment variables.');
+  }
+
+  static async connectDb(url) {
+    ServerConfiguration.$DB = await Utilities.$DB.connect(url);
+    global.$DB = ServerConfiguration.$DB;
   }
 }
 

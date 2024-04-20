@@ -6,6 +6,8 @@
 // Module declaractions
 
 const Server = require('./config');
+const Routes = require('./routes');
+
 const LoadENV = require('@book-junction/env-loader');
 const fs = require('fs');
 const mongoClient = require('mongodb').MongoClient;
@@ -21,9 +23,13 @@ const HOST = $ENV.HOST ?? 'localhost';
 
 (function () {
   try {
+    const url = `${$ENV.DATABASE_URI}${$ENV.DATABASE_NAME}`;
+
     Server.init();
     Server.checkSystemVariables(Constants.REQ_ENV_VARS, Constants.OPT_ENV_VARS);
     Server.configure();
+    Server.connectDb(url);
+    Routes.init(Server.$App);
 
     //Setting up the endpoint
 
