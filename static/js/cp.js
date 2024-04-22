@@ -18,7 +18,7 @@ let image = document.getElementById('image');
 let data = document.getElementById('data');
 let deletionMsg = document.getElementById('deletionMsg');
 let unauthorizedAccessDetected = false;
-let username = new URLSearchParams(this?.window?.location?.search).get('username');
+let username = new URLSearchParams(window?.location?.search).get('username');
 
 dialogs[0].style.display = "none";
 dialogs[1].style.display = "none";
