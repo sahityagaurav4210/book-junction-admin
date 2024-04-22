@@ -1,3 +1,7 @@
+import API from "../api/index.js";
+import NotifyType from "../helpers/notification_type.helpers.js";
+import Utilities from "../utils/index.js";
+
 let dialogs = document.querySelectorAll('dialog');
 let buttons = document.querySelectorAll('button');
 let bookName = document.getElementById('bookName');
@@ -14,7 +18,7 @@ let image = document.getElementById('image');
 let data = document.getElementById('data');
 let deletionMsg = document.getElementById('deletionMsg');
 let unauthorizedAccessDetected = false;
-let username = new URLSearchParams(this.window.location.search).get('username');
+let username = new URLSearchParams(this?.window?.location?.search).get('username');
 
 dialogs[0].style.display = "none";
 dialogs[1].style.display = "none";
@@ -99,33 +103,51 @@ function isLoggedIn() {
 
 isLoggedIn();
 
-window.addEventListener('beforeunload', function (e) {
 
+window.addEventListener('beforeunload', async function (e) {
     e.preventDefault();
     e.returnValue = '';
 
-    let xhr = new XMLHttpRequest();
-    let formData = new FormData();
+    try {
+        const url = "/logout";
+        const payload = { username };
 
-    formData.append('info', 'logout');
-    formData.append('username', username);
-
-    xhr.open('POST', '/logout', true);
-
-    xhr.onload = function () {
-
-        if (xhr.responseText == 'logout') {
-            console.log('successfully logout');
+        const response = await API.makePOSTRequest(url, payload);
+        if (!response.status) {
+            Utilities.showNotification(NotifyType.WARNING, response.message);
         }
-        else {
-            console.log('error');
-        }
-
+    } catch (error) {
+        Utilities.showNotification(NotifyType.DANGER, error.message);
     }
-
-    xhr.send(formData);
-
 });
+
+// wiurlndow.addEventListener('beforeunload', function (e) {
+
+//     e.preventDefault();
+//     e.returnValue = '';
+
+//     let xhr = new XMLHttpRequest();
+//     let formData = new FormData();
+
+//     formData.append('info', 'logout');
+//     formData.append('username', username);
+
+//     xhr.open('POST', '/logout', true);
+
+//     xhr.onload = function () {
+
+//         if (xhr.responseText == 'logout') {
+//             console.log('successfully logout');
+//         }
+//         else {
+//             console.log('error');
+//         }
+
+//     }
+
+//     xhr.send(formData);
+
+// });
 
 buttons[6].addEventListener('click', function () {
     dialogs[0].style.display = "flex";
