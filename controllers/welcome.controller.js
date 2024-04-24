@@ -7,6 +7,13 @@ class WelcomeController {
       code: 200,
     });
   }
+
+  static home(req, res) {
+    const { request } = req.query;
+
+    if (request != 'cp') res.render('login');
+    else res.render('cp');
+  }
 }
 
 module.exports = WelcomeController;

@@ -26,73 +26,36 @@ buttons[0].disabled = true;
 dialogs[2].style.display = 'none';
 dialogs[3].style.display = 'none';
 
-function isLoggedIn() {
-  if (username != null || username != undefined) {
-    let xhr = new XMLHttpRequest();
-    let formData = new FormData();
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].disabled = true;
+}
 
-    formData.append('username', username);
-
-    xhr.open('POST', '/check', true);
-
-    xhr.onload = function () {
-      if (xhr.responseText == 'false') {
-        dialogs[3].style.display = 'flex';
-        dialogs[3].showModal();
-        unauthorizedAccessDetected = true;
-
-        setTimeout(() => {
-          dialogs[3].close();
-          dialogs[3].style.display = 'none';
-          window.open('/', '_blank');
-        }, 3000);
-      } else if (xhr.responseText != 'true') {
-        dialogs[3].style.display = 'flex';
-        dialogs[3].showModal();
-        unauthorizedAccessDetected = true;
-
-        setTimeout(() => {
-          dialogs[3].close();
-          dialogs[3].style.display = 'none';
-          window.open('/', '_blank');
-        }, 3000);
-      }
-
-      if (unauthorizedAccessDetected) {
-        for (let i = 0; i < buttons.length; i++) {
-          buttons[i].disabled = true;
-        }
-      }
-    };
-
-    xhr.send(formData);
-  } else {
-    dialogs[3].style.display = 'flex';
-    dialogs[3].showModal();
-    unauthorizedAccessDetected = true;
-
-    if (unauthorizedAccessDetected) {
-      for (let i = 0; i < buttons.length; i++) {
-        buttons[i].disabled = true;
-      }
+async function isLoggedIn() {
+  try {
+    if (username) {
+      await API.makePOSTRequest('/auth/check', { username });
+      unauthorizedAccessDetected = false;
+    } else {
+      unauthorizedAccessDetected = true;
     }
-
-    setTimeout(() => {
-      dialogs[3].close();
-      dialogs[3].style.display = 'none';
-      window.open('/', '_blank');
-    }, 3000);
+  } catch (error) {
+    unauthorizedAccessDetected = true;
   }
 }
 
-isLoggedIn();
+(async () => {
+  await isLoggedIn();
+  if (unauthorizedAccessDetected) {
+    window.location.href = 'http://localhost:3000';
+  }
+})();
 
 window.addEventListener('keydown', async function (event) {
   if (event.ctrlKey)
     if (event.altKey)
       if (event.key === 'l') {
         try {
-          const url = '/logout';
+          const url = '/auth/logout';
           const payload = { username };
 
           await API.makePOSTRequest(url, payload);

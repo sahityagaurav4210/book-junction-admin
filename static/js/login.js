@@ -23,7 +23,7 @@ button1.addEventListener('click', async function () {
         password: password.value,
       };
 
-      await API.makePOSTRequest('/login', formData);
+      await API.makePOSTRequest('/auth/login', formData);
 
       isLoggedIn = true;
     } else {

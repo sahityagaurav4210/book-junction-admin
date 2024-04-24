@@ -75,6 +75,15 @@ class ServerConfiguration {
     ServerConfiguration.$DB = await Utilities.$DB.connect(url);
     global.$DB = ServerConfiguration.$DB;
   }
+
+  static start(PORT, HOST) {
+    if (!ServerConfiguration.$App)
+      throw new AppNotInitializedException('Please initiate the app before starting the server');
+
+    ServerConfiguration.$App.listen(PORT, HOST, () => {
+      console.log(`Server started at port ${PORT} 🚀🚀🚀🚀`);
+    });
+  }
 }
 
 module.exports = ServerConfiguration;
