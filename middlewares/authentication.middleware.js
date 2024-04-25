@@ -68,7 +68,6 @@ class AuthenticationMiddleware {
         });
       }
     } catch (error) {
-      console.log(error);
       const code = 500;
       return response.status(code).json({
         message: 'An error occured',
