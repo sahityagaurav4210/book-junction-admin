@@ -1,7 +1,14 @@
 const Controllers = require('../controllers');
+const Middlewares = require('../middlewares');
 const router = require('express').Router();
 
-router.post('/login', Controllers.authentication().login);
+router.post(
+  '/login',
+  Middlewares.authentication().checkifUserExists,
+  Middlewares.authentication().authenticateUserByPassword,
+  Middlewares.authentication().checkIfUserAlreadyLoggedIn,
+  Controllers.authentication().login
+);
 router.post('/logout', Controllers.authentication().logout);
 router.post('/check', Controllers.authentication().isUserLoggedIn);
 
