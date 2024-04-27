@@ -15,6 +15,6 @@ router.post(
   Middlewares.authentication().checkIfUserAlreadyLoggedOut,
   Controllers.authentication().logout
 );
-router.post('/check', Controllers.authentication().isUserLoggedIn);
+router.post('/check', Middlewares.authentication().checkifUserExists, Controllers.authentication().isUserLoggedIn);
 
 module.exports = router;

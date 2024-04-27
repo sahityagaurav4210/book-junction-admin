@@ -73,12 +73,9 @@ class AuthController {
 
   static async isUserLoggedIn(req, res) {
     try {
-      const { $DB } = global;
-      const { username } = req.body;
+      const { user } = req;
 
-      const record = await Utilities.$DB.findOne($DB, 'users', { username });
-
-      if (record?.isLoggedIn) {
+      if (user?.isLoggedIn) {
         return res.status(200).json({
           message: 'User is logged in',
           code: 200,
