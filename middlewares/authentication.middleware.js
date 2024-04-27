@@ -120,6 +120,46 @@ class AuthenticationMiddleware {
       });
     }
   }
+
+  static async checkIfUserAlreadyLoggedOut(request, response, next) {
+    try {
+      const { user } = request;
+      const { username } = request.body;
+      const { $DB } = global;
+
+      if (user) {
+        if (user.isLoggedIn) return next();
+        else {
+          const code = 409;
+          return response.status(code).json({
+            message: 'This user is already logged out of his account',
+            code,
+            status: false,
+          });
+        }
+      } else {
+        const userRecord = await Utilities.$DB.findOne($DB, 'users', { username });
+
+        if (userRecord?.isLoggedIn) return next();
+        else {
+          const code = 409;
+          return response.status(code).json({
+            message: 'This user is already logged in his account',
+            code,
+            status: false,
+          });
+        }
+      }
+    } catch (error) {
+      const code = 500;
+      return response.status(code).json({
+        message: 'An error occured',
+        code,
+        status: false,
+        data: { name: error.name, message: error.message },
+      });
+    }
+  }
 }
 
 module.exports = AuthenticationMiddleware;
