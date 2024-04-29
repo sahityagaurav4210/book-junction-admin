@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found</title>
+    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/utils.css">
+</head>
+<body>
+    <section id="header" class="min-h-[10vh] lg:min-h-[100px] bg-slate-900 text-white flex items-center justify-center">
+        <h1 class="text-3xl lg:text-4xl font-extrabold underline">404 - Not Found</h1>
+    </section>
+
+    <section id="body" class="min-h-[80vh] grid lg:grid-cols-2 place-items-center lg:gap-2 m-2">
+        <img src="/public/images/pages/404.avif" alt="404" class="aspect-square object-contain">
+        <div class="flex flex-col justify-center">
+            <h1 class="text-4xl text-justify lg:text-5xl font-bold text-red-500 mb-4">The page you're trying to access is not present.</h1>
+            <button type="button" class="pt-2 pb-2 border-2 border-blue-500 text-blue-500 font-bold transition-all focus:bg-blue-600 focus:text-white outline-none focus:scale-105 w-40" id ="home">Go to home</button>
+        </div>
+    </section>
+
+    <section id="footer" class="w-full bg-black min-h-[10vh] text-white flex items-center justify-evenly">
+        <img src="/public/images/social_media/linkedin.png" alt="linkedin">
+        <img src="/public/images/social_media/instagram.png" alt="instagram">
+        <img src="/public/images/social_media/email.png" alt="email">
+    </section>
+
+    <script src='/public/js/404.js' defer type='module'></script>
+</body>
+</html>

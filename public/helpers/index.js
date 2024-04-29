@@ -25,6 +25,14 @@ class Helpers {
 
     return false;
   }
+
+  static get FooterImagesTypes() {
+    return Object.freeze({
+      LINKEDIN: 'linkedin',
+      INSTA: 'instagram',
+      GMAIL: 'email',
+    });
+  }
 }
 
 export default Helpers;
