@@ -14,6 +14,10 @@ class WelcomeController {
     if (request != 'cp') res.render('login');
     else res.render('cp');
   }
+
+  static notfound(req, res) {
+    return res.render('404');
+  }
 }
 
 module.exports = WelcomeController;

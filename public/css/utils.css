@@ -1,0 +1,9 @@
+@font-face {
+  font-family: Roboto;
+  src: url('./fonts/Roboto-Regular.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url('./fonts/Poppins-Regular.ttf') format('ttf');
+}
