@@ -32,7 +32,7 @@ class ServerConfiguration {
     );
 
     //Setting up the publicly accessible routes
-    ServerConfiguration.$App.use('/public', express.static(path.resolve(__dirname, '../static')));
+    ServerConfiguration.$App.use('/public', express.static(path.resolve(__dirname, '../public')));
     ServerConfiguration.$App.use('/uploads', express.static(path.resolve(__dirname, '../uploads')));
 
     //Configuring CORS
