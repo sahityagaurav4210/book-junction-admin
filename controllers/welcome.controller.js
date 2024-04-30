@@ -16,7 +16,14 @@ class WelcomeController {
   }
 
   static notfound(req, res) {
-    return res.render('404');
+    return res.render('page', {
+      heading: `The page you are trying to access is not present.`,
+      linkedin: global.$ENV.LINKEDIN_URL,
+      instagram: global.$ENV.INSTA_URL,
+      gmail: global.$ENV.GMAIL_URL,
+      title: '404 - Not Found',
+      imageUrl: '/public/images/pages/404.avif',
+    });
   }
 }
 
