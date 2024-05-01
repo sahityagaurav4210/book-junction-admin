@@ -3,5 +3,6 @@ function openPage(url) {
 }
 
 function openHomePage() {
-  window.location.href = `/?request=cp&username=admin`;
+  const username = localStorage.getItem('username') ?? 'test';
+  window.location.href = `/?request=cp&username=${username}`;
 }

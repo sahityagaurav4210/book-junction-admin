@@ -1,3 +1,5 @@
+import Storage from './storage.helpers.js';
+
 class Helpers {
   static get HttpStatusCode() {
     return Object.freeze({
@@ -32,6 +34,10 @@ class Helpers {
       INSTA: 'instagram',
       GMAIL: 'email',
     });
+  }
+
+  static get Store() {
+    return Storage;
   }
 }
 
