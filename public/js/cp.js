@@ -1,4 +1,3 @@
-import API from '../api/index.js';
 import NotifyType from '../helpers/notification_type.helpers.js';
 import Utilities from '../utils/index.js';
 
@@ -17,7 +16,6 @@ let phone = document.getElementById('phone');
 let image = document.getElementById('image');
 let data = document.getElementById('data');
 let deletionMsg = document.getElementById('deletionMsg');
-let unauthorizedAccessDetected = false;
 let username = new URLSearchParams(window?.location?.search).get('username');
 
 dialogs[0].style.display = 'none';
@@ -30,40 +28,27 @@ for (let i = 0; i < buttons.length; i++) {
   buttons[i].disabled = true;
 }
 
-async function isLoggedIn() {
-  try {
-    if (username) {
-      await API.makePOSTRequest('/auth/check', { username });
-      unauthorizedAccessDetected = false;
-    } else {
-      unauthorizedAccessDetected = true;
-    }
-  } catch (error) {
-    unauthorizedAccessDetected = true;
-  }
-}
-
 (async () => {
-  await isLoggedIn();
-  if (unauthorizedAccessDetected) {
-    window.location.href = 'http://localhost:3000';
-  }
+  await Utilities.authenticateUser(username);
 })();
 
-window.addEventListener('keydown', async function (event) {
+async function logoutHandler(event) {
   if (event.ctrlKey)
     if (event.altKey)
       if (event.key === 'l') {
         try {
           const url = '/auth/logout';
-          const payload = { username };
-
-          await API.makePOSTRequest(url, payload);
-          window.location.href = 'http://localhost:3000';
+          await Utilities.logout(url, username);
         } catch (error) {
           Utilities.showNotification(NotifyType.DANGER, error.message);
         }
       }
+}
+
+window.addEventListener('keydown', logoutHandler);
+
+window.addEventListener('beforeunload', function () {
+  window.removeEventListener('keydown', logoutHandler);
 });
 
 buttons[6].addEventListener('click', function () {
