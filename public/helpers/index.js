@@ -39,6 +39,11 @@ class Helpers {
   static get Store() {
     return Storage;
   }
+
+  static redirectToHomePage() {
+    const username = Helpers.Store.retrieveAnEntryFromStorage('username');
+    if (username) window.location.href = `/?request=cp&username=${username}`;
+  }
 }
 
 export default Helpers;

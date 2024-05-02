@@ -1,4 +1,5 @@
 import Utilities from '../utils/index.js';
+import Helpers from '../helpers/index.js';
 
 let button1 = document.getElementById('button1');
 let username = document.getElementById('username');
@@ -22,3 +23,5 @@ window.addEventListener('beforeunload', function () {
   button1.disabled = false;
   button1.innerHTML = 'Submit';
 });
+
+Helpers.redirectToHomePage();
