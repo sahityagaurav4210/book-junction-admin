@@ -1,3 +1,4 @@
+const Helpers = require('../helpers');
 const Utilities = require('../utils');
 
 class AuthController {
@@ -14,27 +15,30 @@ class AuthController {
       );
 
       if (matchedCount === 1) {
-        return res.status(200).json({
+        const code = Helpers.HttpResponseStatusCode.OK;
+        return res.status(code).json({
           message: 'Login Successfull',
           status: true,
-          code: 200,
+          code,
         });
       } else {
-        return res.status(503).json({
+        const code = Helpers.HttpResponseStatusCode.UNAVAILABLE;
+        return res.status(code).json({
           message: "We're unable to log you in right now, please try again...",
           status: false,
-          code: 503,
+          code,
         });
       }
     } catch (error) {
-      return res.status(500).json({
+      const code = Helpers.HttpResponseStatusCode.SERV_ERR;
+      return res.status(code).json({
         message: 'An error occured',
         data: {
           name: error?.name,
           message: error.message,
         },
         status: false,
-        code: 500,
+        code,
       });
     }
   }
@@ -46,27 +50,30 @@ class AuthController {
       const updatedDoc = await Utilities.$DB.findAndUpdate($DB, 'users', { username }, { $set: { isLoggedIn: false } });
 
       if (updatedDoc && !updatedDoc.isLoggedIn) {
-        return res.status(200).json({
+        const code = Helpers.HttpResponseStatusCode.OK;
+        return res.status(code).json({
           message: 'Logout successfull',
           status: true,
-          code: 200,
+          code,
         });
       } else {
-        return res.status(503).json({
+        const code = Helpers.HttpResponseStatusCode.UNAVAILABLE;
+        return res.status(code).json({
           message: "We're unable to log you out, please try again",
           status: false,
-          code: 503,
+          code,
         });
       }
     } catch (error) {
-      return res.status(500).json({
+      const code = Helpers.HttpResponseStatusCode.SERV_ERR;
+      return res.status(code).json({
         message: 'An error occured',
         data: {
           name: error?.name,
           message: error.message,
         },
         status: false,
-        code: 500,
+        code,
       });
     }
   }
@@ -76,22 +83,25 @@ class AuthController {
       const { user } = req;
 
       if (user?.isLoggedIn) {
-        return res.status(200).json({
+        const code = Helpers.HttpResponseStatusCode.OK;
+        return res.status(code).json({
           message: 'User is logged in',
-          code: 200,
+          code,
           status: true,
         });
       } else {
-        return res.status(401).json({
+        const code = Helpers.HttpResponseStatusCode.UNAUTHORISED;
+        return res.status(code).json({
           message: 'User is not logged in',
-          code: 401,
+          code,
           status: false,
         });
       }
     } catch (error) {
-      return res.status(500).json({
+      const code = Helpers.HttpResponseStatusCode.SERV_ERR;
+      return res.status(code).json({
         message: 'An error occured',
-        code: 500,
+        code,
         data: {
           name: error?.name,
           message: error.message,

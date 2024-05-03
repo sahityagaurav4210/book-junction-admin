@@ -1,22 +1,27 @@
+const Helpers = require('../helpers');
+
 class WelcomeController {
   static pong(request, response) {
-    return response.status(200).json({
+    const code = Helpers.HttpResponseStatusCode.OK;
+    return response.status(code).json({
       message: 'Pong',
       status: true,
       data: {},
-      code: 200,
+      code,
     });
   }
 
   static home(req, res) {
     const { request } = req.query;
+    const code = Helpers.HttpResponseStatusCode.OK;
 
-    if (request != 'cp') res.render('login');
-    else res.render('cp');
+    if (request != 'cp') res.status(code).render('login');
+    else res.status(code).render('cp');
   }
 
   static notfound(req, res) {
-    return res.render('page', {
+    const code = Helpers.HttpResponseStatusCode.OK;
+    return res.status(code).render('page', {
       heading: `The page you are trying to access is not present.`,
       linkedin: global.$ENV.LINKEDIN_URL,
       instagram: global.$ENV.INSTA_URL,

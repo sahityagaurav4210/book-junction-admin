@@ -1,3 +1,4 @@
+const Helpers = require('../helpers');
 const Utilities = require('../utils');
 
 class AuthenticationMiddleware {
@@ -12,22 +13,22 @@ class AuthenticationMiddleware {
         request.user = userRecord;
         return next();
       } else {
-        const code = 404;
+        const code = Helpers.HttpResponseStatusCode.UNAUTHORISED;
         return response.status(code).json({
           message: 'This user does not exists in our databases',
-          code: code,
+          code,
           status: false,
         });
       }
     } catch (error) {
-      const code = 500;
+      const code = Helpers.HttpResponseStatusCode.SERV_ERR;
       return response.status(code).json({
         message: 'An error occured',
         data: {
           name: error.name,
           message: error.message,
         },
-        code: code,
+        code,
         status: false,
       });
     }
@@ -45,10 +46,10 @@ class AuthenticationMiddleware {
           request.user = null;
           return next();
         } else {
-          const code = 401;
+          const code = Helpers.HttpResponseStatusCode.UNAUTHORISED;
           return response.status(code).json({
             message: 'Invalid credentials',
-            code: code,
+            code,
             status: false,
           });
         }
@@ -60,22 +61,22 @@ class AuthenticationMiddleware {
         request.authenticatedUser = userRecord;
         return next();
       } else {
-        const code = 401;
+        const code = Helpers.HttpResponseStatusCode.UNAUTHORISED;
         return response.status(code).json({
           message: 'Invalid credentials',
-          code: code,
+          code,
           status: false,
         });
       }
     } catch (error) {
-      const code = 500;
+      const code = Helpers.HttpResponseStatusCode.SERV_ERR;
       return response.status(code).json({
         message: 'An error occured',
         data: {
           name: error.name,
           message: error.message,
         },
-        code: code,
+        code,
         status: false,
       });
     }
@@ -90,7 +91,7 @@ class AuthenticationMiddleware {
       if (authenticatedUser) {
         if (!authenticatedUser.isLoggedIn) return next();
         else {
-          const code = 409;
+          const code = Helpers.HttpResponseStatusCode.CONFLICT;
           return response.status(code).json({
             message: 'This user is already logged in his account',
             code,
@@ -102,7 +103,7 @@ class AuthenticationMiddleware {
 
         if (!userRecord?.isLoggedIn) return next();
         else {
-          const code = 409;
+          const code = Helpers.HttpResponseStatusCode.CONFLICT;
           return response.status(code).json({
             message: 'This user is already logged in his account',
             code,
@@ -111,7 +112,7 @@ class AuthenticationMiddleware {
         }
       }
     } catch (error) {
-      const code = 500;
+      const code = Helpers.HttpResponseStatusCode.SERV_ERR;
       return response.status(code).json({
         message: 'An error occured',
         code,
@@ -130,7 +131,7 @@ class AuthenticationMiddleware {
       if (user) {
         if (user.isLoggedIn) return next();
         else {
-          const code = 409;
+          const code = Helpers.HttpResponseStatusCode.CONFLICT;
           return response.status(code).json({
             message: 'This user is already logged out of his account',
             code,
@@ -142,7 +143,7 @@ class AuthenticationMiddleware {
 
         if (userRecord?.isLoggedIn) return next();
         else {
-          const code = 409;
+          const code = Helpers.HttpResponseStatusCode.CONFLICT;
           return response.status(code).json({
             message: 'This user is already logged in his account',
             code,
@@ -151,7 +152,7 @@ class AuthenticationMiddleware {
         }
       }
     } catch (error) {
-      const code = 500;
+      const code = Helpers.HttpResponseStatusCode.SERV_ERR;
       return response.status(code).json({
         message: 'An error occured',
         code,
