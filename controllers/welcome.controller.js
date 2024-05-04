@@ -30,6 +30,21 @@ class WelcomeController {
       imageUrl: '/public/images/pages/404.avif',
     });
   }
+
+  static error(req, res) {
+    const { name, message } = req.query;
+    const code = Helpers.HttpResponseStatusCode.OK;
+    return res.status(code).render('error', {
+      name,
+      message,
+      linkedin: '/public/images/social_media/linkedin.png',
+      insta: '/public/images/social_media/instagram.png',
+      gmail: '/public/images/social_media/email.png',
+      linkedinUrl: global.$ENV.LINKEDIN_URL,
+      instaUrl: global.$ENV.INSTA_URL,
+      gmailUrl: global.$ENV.GMAIL_URL,
+    });
+  }
 }
 
 module.exports = WelcomeController;

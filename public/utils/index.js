@@ -1,6 +1,7 @@
 import NotifyType from '../helpers/notification_type.helpers.js';
 import Helpers from '../helpers/index.js';
 import API from '../api/index.js';
+import FailedResponseException from '../exceptions/FailedResponseException.js';
 
 class Utilities {
   static showNotification(notificationType = NotifyType.SUCCESS, message = '') {
@@ -26,7 +27,18 @@ class Utilities {
           unauthorizedAccessDetected = true;
         }
       } catch (error) {
-        unauthorizedAccessDetected = true;
+        if (error instanceof FailedResponseException) {
+          const { code, message } = error.data;
+
+          if (code !== Helpers.HttpStatusCode.SERV_ERR) {
+            Utilities.showNotification(NotifyType.DANGER, message);
+            unauthorizedAccessDetected = true;
+          } else window.location.href = `/error?name=FailedResponseException&message=${message}`;
+        } else {
+          const { message } = error;
+          const name = 'An error occured';
+          window.location.href = `/error?name=${name}&message=${message}`;
+        }
       }
     }
 
@@ -34,11 +46,24 @@ class Utilities {
   }
 
   static async logout(url, username) {
-    const payload = { username };
+    try {
+      const payload = { username };
 
-    await API.makePOSTRequest(url, payload);
-    Helpers.Store.removeAnEntryFromStorage('username');
-    window.location.href = 'http://localhost:3000';
+      await API.makePOSTRequest(url, payload);
+      Helpers.Store.removeAnEntryFromStorage('username');
+      window.location.href = 'http://localhost:3000';
+    } catch (error) {
+      if (error instanceof FailedResponseException) {
+        const { code, message } = error.data;
+
+        if (code !== Helpers.HttpStatusCode.SERV_ERR) Utilities.showNotification(NotifyType.DANGER, message);
+        else window.location.href = `/error?name=FailedResponseException&message=${message}`;
+      } else {
+        const { message } = error;
+        const name = 'An error occured';
+        window.location.href = `/error?name=${name}&message=${message}`;
+      }
+    }
   }
 
   static async login(url, payload) {
@@ -52,7 +77,17 @@ class Utilities {
         isLoggedIn = true;
       } catch (error) {
         isLoggedIn = false;
-        Utilities.showNotification(NotifyType.DANGER, error.message);
+
+        if (error instanceof FailedResponseException) {
+          const { code, message } = error.data;
+
+          if (code !== Helpers.HttpStatusCode.SERV_ERR) Utilities.showNotification(NotifyType.DANGER, message);
+          else window.location.href = `/error?name=FailedResponseException&message=${message}`;
+        } else {
+          const { message } = error;
+          const name = 'An error occured';
+          window.location.href = `/error?name=${name}&message=${message}`;
+        }
       }
     }
 

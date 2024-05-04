@@ -1,14 +1,15 @@
-import Helpers from "../helpers/index.js";
+import FailedResponseException from '../exceptions/FailedResponseException.js';
+import Helpers from '../helpers/index.js';
 
 class API {
-  static async makePOSTRequest(url = "", payload = {}) {
+  static async makePOSTRequest(url = '', payload = {}) {
     let xhr = new XMLHttpRequest();
 
     return new Promise((resolve, reject) => {
-      if (!url) return reject("Please provide a valid url");
+      if (!url) return reject('Please provide a valid url');
 
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.open('POST', url, true);
+      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
       xhr.onload = function () {
         const reply = xhr.response;
@@ -16,7 +17,7 @@ class API {
         if (Helpers.isReqSucceeded(xhr.status)) {
           return resolve(jsonReply);
         } else {
-          return reject(jsonReply);
+          return reject(new FailedResponseException('Api returned unsuccessful response', jsonReply));
         }
       };
 
