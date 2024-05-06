@@ -1,0 +1,16 @@
+@keyframes showDialog{
+    from{
+        top: -200px;
+    }
+
+    to{
+        top: 2.5rem;
+    }
+}
+
+.showDialog{
+    animation-name: showDialog;
+    animation-duration: 200ms;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
