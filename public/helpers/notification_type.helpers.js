@@ -1,8 +1,8 @@
 const NotifyType = Object.freeze({
-  SUCCESS: "success",
-  WARNING: "warn",
-  INFO: "info",
-  DANGER: "error",
+  SUCCESS: 'success',
+  WARNING: 'warning',
+  INFO: 'info',
+  DANGER: 'error',
 });
 
 export default NotifyType;

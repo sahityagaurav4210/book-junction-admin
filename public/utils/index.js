@@ -6,7 +6,8 @@ import FailedResponseException from '../exceptions/FailedResponseException.js';
 class Utilities {
   static showNotification(notificationType = NotifyType.SUCCESS, message = '') {
     const notify = new Notyf();
-    notify[notificationType]({
+    notify.open({
+      type: notificationType,
       duration: 1500,
       dismissible: true,
       message: message,
@@ -70,8 +71,10 @@ class Utilities {
     const { username, password } = payload;
     let isLoggedIn = false;
 
-    if (!username || !password) isLoggedIn = false;
-    else {
+    if (!username || !password) {
+      isLoggedIn = false;
+      Utilities.showNotification(NotifyType.DANGER, 'Please fill up the form correctly');
+    } else {
       try {
         await API.makePOSTRequest(url, payload);
         isLoggedIn = true;

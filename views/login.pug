@@ -1,47 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
 
     <link rel="icon" type="image/png" href="public/images/logo.png">
-    <link rel="stylesheet" href="../public/css/login.css">
+    <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <link rel="stylesheet" href="../public/css/alignment.css">
+    <link rel="stylesheet" href="/public/css/utils.css">
+    <link rel="stylesheet" href="/public/css/animation.css">
 
 </head>
+
 <body>
-    
-    <section class="align align-ver" id="login">
+    <section id="header" class="min-h-[10vh] lg:min-h-[100px] bg-slate-900 text-white flex items-center justify-center">
+        <h1 class="text-3xl lg:text-4xl font-extrabold underline"><span class="text-[#D1D113] underline">LOGIN</span>PANEL</h1>
+    </section>
 
-        <div class="align align-ver container" id="root">
+    <section id="body" class="dark:bg-slate-950">
+        <div class="min-h-[80vh] flex items-center justify-center">
+            <div class="container">
+                <div class="grid m-2 p-2 rounded-lg shadow-sm shadow-gray-50">
+                    <div class="flex justify-center">
+                        <img src="/public/images/logo.png" alt="logo" class="aspect-square object-contain">
+                    </div>
 
-            <div class="align align-ver">
-                <h1>CONTROL PANEL LOGIN</h1>
-            </div>
+                    <form id="login" autocomplete="off">
+                        <div class="grid lg:grid-cols-10 m-1 mb-4">
+                            <label for="username" class="col-span-4 mb-1 lg:mx-4 font-bold lg:text-right lg:align-middle dark:text-white font-roboto">Username <sup class="text-xl text-red-500 font-bold">*</sup></label>
+                            <input type="text" id="username" class="col-span-5 border-gray-400 focus:border-gray-700 dark:border-cyan-300 dark:text-white outline-none pl-2 h-10 rounded-sm font-roboto bg-transparent border-b-2 dark:focus:border-cyan-600" placeholder="Ex:- johnsmith23"/>
+                        </div>
 
-            <div class="align align-ver container-lg">
+                        <div class="grid lg:grid-cols-10 m-1 mb-4">
+                            <label for="password" class="col-span-4 mb-1 lg:mx-4 font-bold lg:text-right dark:text-white font-roboto">Password
+                                <sup class="text-red-500 font-bold text-xl">*</sup></label>
+                            <input type="password" id="password" class="col-span-5 border-b-2 border-gray-300 focus:border-gray-700 dark:border-cyan-300 dark:focus:border-cyan-600 outline-none pl-2 h-10 rounded-sm font-roboto bg-transparent dark:text-white" placeholder="Ex:- joHn@1234" />
+                        </div>
 
-                <input type="text" placeholder="Username" id="username" required>
-                <input type="password" id="password" placeholder="Password" required>
+                        <div class="grid grid-cols-2 mb-2">
+                            <div class="lg:text-center">
+                                <input type="checkbox" id="show" class="mx-1">
+                                <label for="show" class="dark:text-white" id="showCheckBox">Show Password</label>
+                            </div>
+                            <div class="lg:text-center">
+                                <input type="checkbox" id="rememberMe" class="mx-1">
+                                <label for="rememberMe" class="dark:text-white">Remember Me</label>
+                            </div>
+                        </div>
 
-            </div>
+                        <div class="grid lg:grid-cols-2 gap-2 lg:m-1">
+                            <button type="submit" id='button1' class="border lg:m-auto border-[#2D2BA8] bg-[#2D2BA8] text-white lg:w-48 p-2 dark:border-[#F3CCF3] dark:bg-[#F3CCF3] dark:focus:bg-[#5D3587] dark:text-[#5D3587] dark:focus:text-white font-semibold rounded-sm font-roboto transition-all focus:scale-105 outline-none dark:focus:shadow-orange-100 dark:focus:shadow-sm">Login</button>
+                            <button type="reset" class="border lg:m-auto border-orange-300 bg-orange-300 dark:focus:bg-orange-500 text-red-700 dark:focus:text-gray-50 font-semibold rounded-sm font-roboto p-2 lg:w-48 transition-all focus:scale-105 dark:focus:shadow-sm outline-none">Reset</button>
+                        </div>
 
-            <div class="align-sec">
+                        <div class="grid grid-cols-1 m-1 pl-1 pt-2 pb-2">
+                            <div class="flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right mx-1 text-white">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                                <a href="#" class="font-bold font-poppins text-[#872341] dark:text-[#BC7FCD] outline-none">Reset your password</a>
+                            </div>
+                        </div>
 
-                <button type="submit" id="button1">Submit</button>
-                <button type="reset" id="button2" class="cn-btn">Reset</button>
+                        <div class="grid grid-cols-1 m-1 pl-1 pt-2 pb-2">
+                            <div class="flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right mx-1 text-white">
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                                <a href="#" class="font-bold font-poppins text-[#872341] dark:text-[#BC7FCD] outline-none">Get admin access</a>
+                            </div>
+                        </div>
 
+                        <div class="grid grid-cols-1 m-1 pl-1 pt-2 pb-2">
+                            <p class="font-bold font-poppins text-sm text-gray-700 outline-none">By clicking on log in,
+                                you agree to our
+                                <a href="" class="underline text-blue-400">Terms and Services.</a>
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 m-1 pl-1 pt-2 pb-2">
+                            <p class="font-bold font-poppins text-sm text-gray-700 outline-none">Fields marked with
+                                asterik (
+                                <span class="text-red-500">*</span> ) are mandatory to fill.
+                            </p>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </div>
+    </section>
 
+    <section id="footer" class="w-full bg-black min-h-[10vh] text-white flex items-center justify-evenly">
+        <img src="/public/images/social_media/linkedin.png" alt="linkedin">
+        <img src="/public/images/social_media/instagram.png" alt="instagram">
+        <img src="/public/images/social_media/email.png" alt="email">
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js" defer></script>
-    <script src="../public/js/login.js" type='module' defer></script>
-
-
+    <script src="/public/js/login.js" type="module" defer></script>
 </body>
+
 </html>
