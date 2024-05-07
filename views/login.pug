@@ -19,7 +19,7 @@
         <h1 class="text-3xl lg:text-4xl font-extrabold underline"><span class="text-[#D1D113] underline">LOGIN</span>PANEL</h1>
     </section>
 
-    <section id="body" class="dark:bg-slate-950">
+    <section id="body" class="dark:bg-slate-950 scale-0">
         <div class="min-h-[80vh] flex items-center justify-center">
             <div class="container">
                 <div class="grid m-2 p-2 rounded-lg shadow-sm shadow-gray-50">
@@ -77,14 +77,12 @@
 
                         <div class="grid grid-cols-1 m-1 pl-1 pt-2 pb-2">
                             <p class="font-bold font-poppins text-sm text-gray-700 outline-none">By clicking on log in,
-                                you agree to our
-                                <a href="" class="underline text-blue-400">Terms and Services.</a>
+                                you agree to our <a href="" class="underline text-blue-400">Terms and Services.</a>
                             </p>
                         </div>
 
                         <div class="grid grid-cols-1 m-1 pl-1 pt-2 pb-2">
-                            <p class="font-bold font-poppins text-sm text-gray-700 outline-none">Fields marked with
-                                asterik (
+                            <p class="font-bold font-poppins text-sm text-gray-700 outline-none">Fields marked with asterik (
                                 <span class="text-red-500">*</span> ) are mandatory to fill.
                             </p>
                         </div>
@@ -96,13 +94,15 @@
     </section>
 
     <section id="footer" class="w-full bg-black min-h-[10vh] text-white flex items-center justify-evenly">
-        <img src="/public/images/social_media/linkedin.png" alt="linkedin">
-        <img src="/public/images/social_media/instagram.png" alt="instagram">
-        <img src="/public/images/social_media/email.png" alt="email">
+        <img src="#{linkedin}" alt="linkedin" onclick="openPage('#{linkedinUrl}')">
+        <img src="#{insta}" alt="instagram" onclick="openPage('#{instaUrl}')">
+        <img src="#{gmail}" alt="email" onclick="openPage('#{gmailUrl}')">
     </section>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js" defer></script>
-    <script src="/public/js/login.js" type="module" defer></script>
+    <script src="/public/js/login.js" type="module" defer ></script>
+    script(src="/public/js/script.js" defer) 
 </body>
 
 </html>
