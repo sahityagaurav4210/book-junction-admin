@@ -33,4 +33,9 @@ showCheckBox.addEventListener('click', function () {
   !showPwd.checked ? (password.type = 'text') : (password.type = 'password');
 });
 
+gsap.to('#body', {
+  scale: 1,
+  duration: 1,
+});
+
 Helpers.redirectToHomePage();
