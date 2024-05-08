@@ -43,7 +43,7 @@ class Utilities {
       }
     }
 
-    if (unauthorizedAccessDetected) window.location.href = 'http://localhost:3000';
+    if (unauthorizedAccessDetected) window.location.href = 'http://192.168.29.49:3000';
   }
 
   static async logout(url, username) {
@@ -52,7 +52,7 @@ class Utilities {
 
       await API.makePOSTRequest(url, payload);
       Helpers.Store.removeAnEntryFromStorage('username');
-      window.location.href = 'http://localhost:3000';
+      window.location.href = 'http://192.168.29.49:3000';
     } catch (error) {
       if (error instanceof FailedResponseException) {
         const { code, message } = error.data;

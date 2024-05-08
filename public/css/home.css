@@ -1,0 +1,7 @@
+#profile {
+  display: flex;
+}
+
+#profile:focus #contextMenu1 {
+  display: block;
+}
