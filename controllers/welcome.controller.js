@@ -36,6 +36,17 @@ class WelcomeController {
       });
   }
 
+  static offline(req, res) {
+    return res.render('503', {
+      heading: '503 Service unavailable',
+      imageUrl: '/public/images/pages/503.png',
+      title: 'The backend is down for maintainance',
+      linkedin: global.$ENV.LINKEDIN_URL,
+      instagram: global.$ENV.INSTA_URL,
+      gmail: global.$ENV.GMAIL_URL,
+    })
+  }
+
   static notfound(req, res) {
     const code = Helpers.HttpResponseStatusCode.OK;
     return res.status(code).render('page', {
