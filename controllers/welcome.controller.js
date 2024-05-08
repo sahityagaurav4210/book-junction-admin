@@ -12,7 +12,7 @@ class WelcomeController {
   }
 
   static home(req, res) {
-    const { request } = req.query;
+    const { request, username } = req.query;
     const code = Helpers.HttpResponseStatusCode.OK;
 
     if (request != 'cp') {
@@ -24,7 +24,16 @@ class WelcomeController {
         insta: '/public/images/social_media/instagram.png',
         gmail: '/public/images/social_media/email.png',
       });
-    } else res.status(code).render('cp');
+    } else
+      res.status(code).render('cp', {
+        username,
+        linkedinUrl: global.$ENV.LINKEDIN_URL,
+        instaUrl: global.$ENV.INSTA_URL,
+        gmailUrl: global.$ENV.GMAIL_URL,
+        linkedin: '/public/images/social_media/linkedin.png',
+        insta: '/public/images/social_media/instagram.png',
+        gmail: '/public/images/social_media/email.png',
+      });
   }
 
   static notfound(req, res) {
