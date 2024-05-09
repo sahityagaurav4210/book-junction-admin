@@ -21,15 +21,16 @@ window.addEventListener('keydown', logoutHandler);
 
 window.addEventListener('beforeunload', function () {
   window.removeEventListener('keydown', logoutHandler);
+  logoutBtn.children[1].innerHTML = 'Log out';
+  logoutBtn.children[1].disabled = false;
 });
 
 logoutBtn.addEventListener('click', async function () {
-  try {
-    const url = '/auth/logout';
-    await Utilities.logout(url, username);
-  } catch (error) {
-    Utilities.showNotification(NotifyType.DANGER, error.message);
-  }
+  logoutBtn.children[1].innerHTML = 'Logging out';
+  logoutBtn.children[1].disabled = true;
+
+  const url = '/auth/logout';
+  await Utilities.logout(url, username);
 });
 
 (async () => {
