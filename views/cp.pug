@@ -13,7 +13,7 @@
     <section id="header" class="min-h-[10vh] lg:min-h-[100px] bg-slate-900 text-white">
         <div class="grid grid-cols-12 min-h-[10vh] lg:min-h-[100px]">
             <div class="col-span-10 flex items-center">
-                <h1 class="text-xl lg:text-2xl font-extrabold ml-5">Good Morning, #{username}</h1>
+                <h1 class="text-xl lg:text-2xl font-extrabold ml-5" id="cpHeading"></h1>
             </div>
             <div class=" cursor-pointer col-span-2 flex items-center justify-center relative" id="profile" tabindex="1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
@@ -80,7 +80,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js" defer></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="/public/js/script.js" defer></script>
+    <script src="/public/js/script.js" defer data-username="#{username}"></script>
     <script src="/public/js/cp.js" defer type="module"></script>
 </body>
 </html>
