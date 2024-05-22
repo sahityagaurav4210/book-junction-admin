@@ -1,9 +1,15 @@
 import Utilities from '../utils/index.js';
+import Helpers from '../helpers/index.js';
 
 let username = new URLSearchParams(window?.location?.search).get('username');
 const logoutBtn = document.getElementById('logout');
 
 async function logoutHandler(event) {
+  if (Helpers.isOnline === false) {
+    Utilities.showNotification('error', "You're offline");
+    return;
+  }
+
   if (event.ctrlKey)
     if (event.altKey)
       if (event.key === 'l') {
@@ -27,6 +33,11 @@ window.addEventListener('beforeunload', function () {
 });
 
 logoutBtn.addEventListener('click', async function () {
+  if (Helpers.isOnline === false) {
+    Utilities.showNotification('error', "You're offline");
+    return;
+  }
+
   logoutBtn.children[1].innerHTML = 'Logging out';
   logoutBtn.children[1].disabled = true;
 
@@ -38,5 +49,10 @@ logoutBtn.addEventListener('click', async function () {
 });
 
 (async () => {
+  if (Helpers.isOnline === false) {
+    Utilities.showNotification('error', "You're offline");
+    return;
+  }
+
   await Utilities.authenticateUser(username);
 })();

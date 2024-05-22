@@ -11,6 +11,11 @@ const showCheckBox = document.getElementById('showCheckBox');
 login.addEventListener('submit', async function (event) {
   event.preventDefault();
 
+  if (Helpers.isOnline === false) {
+    Utilities.showNotification('error', "You're offline");
+    return;
+  }
+
   button1.disabled = true;
   button1.innerHTML = 'Please Wait...';
 

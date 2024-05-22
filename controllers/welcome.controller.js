@@ -38,13 +38,13 @@ class WelcomeController {
 
   static offline(req, res) {
     return res.render('503', {
-      heading: '503 Service unavailable',
+      heading: 'Service is unavailable right now',
       imageUrl: '/public/images/pages/503.png',
-      title: 'The backend is down for maintainance',
+      title: `You're offline`,
       linkedin: global.$ENV.LINKEDIN_URL,
       instagram: global.$ENV.INSTA_URL,
       gmail: global.$ENV.GMAIL_URL,
-    })
+    });
   }
 
   static notfound(req, res) {
