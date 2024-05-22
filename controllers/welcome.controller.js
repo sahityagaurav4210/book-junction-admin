@@ -36,6 +36,17 @@ class WelcomeController {
       });
   }
 
+  static offline(req, res) {
+    return res.render('503', {
+      heading: 'Service is unavailable right now',
+      imageUrl: '/public/images/pages/503.png',
+      title: `You're offline`,
+      linkedin: global.$ENV.LINKEDIN_URL,
+      instagram: global.$ENV.INSTA_URL,
+      gmail: global.$ENV.GMAIL_URL,
+    });
+  }
+
   static notfound(req, res) {
     const code = Helpers.HttpResponseStatusCode.OK;
     return res.status(code).render('page', {

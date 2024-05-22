@@ -44,6 +44,10 @@ class Helpers {
     const username = Helpers.Store.retrieveAnEntryFromStorage('username');
     if (username) window.location.href = `/?request=cp&username=${username}`;
   }
+
+  static get isOnline() {
+    return window.internet;
+  }
 }
 
 export default Helpers;
