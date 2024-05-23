@@ -1,11 +1,24 @@
 import clipboard from 'clipboardy';
 
+const typePlaceHolder = process.argv[2];
+const messagePlaceHolder = process.argv[4];
+const descriptionPlaceHolder = process.argv[6];
+const typeRegex = /(feat|fix|refac|hotfix|refactor|feat\/fix|fix\/feat)/;
+
 const type = process.argv[3];
+const message = process.argv[5];
+const description = process.argv[7];
 const date = new Date().toLocaleDateString('hi-In');
-let message = '';
 
-for (let i = 5; i < process.argv.length; i++) message += process.argv[i] + ' ';
+if (typePlaceHolder !== '--type' || messagePlaceHolder !== '--msg' || descriptionPlaceHolder !== '--desc') {
+  console.error('Please provide --type, --msg and --desc arguments');
+  process.exit(1);
+}
+if (!typeRegex.test(type)) {
+  console.error('Invalid commit message type');
+  process.exit(1);
+}
 
-message = `${date} - ${type}: ${message}`;
-clipboard.writeSync(message);
-console.log(message);
+const commitMessage = `git commit -m "${date} - ${type}: ${message}" -m "${description}"`;
+clipboard.writeSync(commitMessage);
+console.log(commitMessage);
