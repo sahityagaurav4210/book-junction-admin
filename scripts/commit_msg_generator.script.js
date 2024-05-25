@@ -1,4 +1,11 @@
-import clipboard from 'clipboardy';
+const Clipboard = require('@book-junction/clipboard/build').default;
+
+const clipboard = new Clipboard();
+
+async function write(text) {
+  await clipboard.copy(text);
+  console.log(text);
+}
 
 const typePlaceHolder = process.argv[2];
 const messagePlaceHolder = process.argv[4];
@@ -20,5 +27,4 @@ if (!typeRegex.test(type)) {
 }
 
 const commitMessage = `git commit -m "${date} - ${type}: ${message}" -m "${description}"`;
-clipboard.writeSync(commitMessage);
-console.log(commitMessage);
+write(commitMessage);
