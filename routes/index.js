@@ -1,7 +1,7 @@
-const AppNotInitializedException = require('../exceptions/AppNotInitializedException');
+const AppNotInitializedException = require('exceptions/AppNotInitializedException');
 
-const welcomeRoutes = require('./welcome.route');
-const authRoutes = require('./authentication.route');
+const welcomeRoutes = require('routes/welcome.route');
+const authRoutes = require('routes/authentication.route');
 
 class Routes {
   static init(app) {

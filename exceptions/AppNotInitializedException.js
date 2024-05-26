@@ -1,4 +1,4 @@
-const Types = require('./Types');
+const Types = require('exceptions/Types');
 
 class AppNotInitializedException extends Error {
   constructor(message) {

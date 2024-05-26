@@ -1,5 +1,5 @@
-const Helpers = require('../helpers');
-const Utilities = require('../utils');
+const Helpers = require('helpers');
+const Utilities = require('utils');
 
 class AuthController {
   static async login(req, res) {

@@ -1,5 +1,5 @@
-const WelcomeController = require('./welcome.controller');
-const AuthController = require('./authentication.controller');
+const WelcomeController = require('controllers/welcome.controller');
+const AuthController = require('controllers/authentication.controller');
 
 class Controllers {
   static welcome() {

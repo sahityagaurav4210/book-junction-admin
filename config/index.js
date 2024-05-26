@@ -5,9 +5,9 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const cors = require('cors');
 
-const AppNotInitializedException = require('../exceptions/AppNotInitializedException');
-const EnvNotLoadedException = require('../exceptions/EnvNotLoadedException');
-const Utilities = require('../utils');
+const AppNotInitializedException = require('exceptions/AppNotInitializedException');
+const EnvNotLoadedException = require('exceptions/EnvNotLoadedException');
+const Utilities = require('utils');
 
 class ServerConfiguration {
   static $App;

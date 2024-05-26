@@ -1,4 +1,4 @@
-const AuthenticationMiddleware = require('./authentication.middleware');
+const AuthenticationMiddleware = require('middlewares/authentication.middleware');
 
 class Middlewares {
   static authentication() {
