@@ -1,4 +1,4 @@
-const Types = require('./Types');
+const Types = require('exceptions/Types');
 
 class EnvNotLoadedException extends Error {
   constructor(message) {

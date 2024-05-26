@@ -5,8 +5,9 @@
 
 // Module declaractions
 
-const Server = require('./config');
-const Routes = require('./routes');
+require('module-alias/register');
+const Server = require('config');
+const Routes = require('routes');
 const LoadENV = require('@book-junction/env-loader');
 const Constants = require('./constants');
 

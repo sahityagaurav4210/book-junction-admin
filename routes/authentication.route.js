@@ -1,5 +1,5 @@
-const Controllers = require('../controllers');
-const Middlewares = require('../middlewares');
+const Controllers = require('controllers');
+const Middlewares = require('middlewares');
 const router = require('express').Router();
 
 router.post(

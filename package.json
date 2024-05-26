@@ -12,12 +12,23 @@
   },
   "author": "Gaurav Sahitya",
   "license": "ISC",
+  "_moduleAliases": {
+    "controllers": "controllers",
+    "config": "config",
+    "routes": "routes",
+    "exceptions": "exceptions",
+    "helpers": "helpers",
+    "middlewares": "middlewares",
+    "utils": "utils",
+    "views": "views"
+  },
   "dependencies": {
     "@book-junction/clipboard": "^1.0.1",
     "@book-junction/env-loader": "^1.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "express-fileupload": "^1.3.1",
+    "module-alias": "^2.2.3",
     "mongodb": "^4.4.1",
     "pug": "^3.0.2"
   },
